@@ -6,7 +6,8 @@ function Contenido () {
     const [data, setData] = useState('');
     const [chat, setChat] = useState([]);
     const [question, setQuestion] = useState('');
-
+    const [showTextbox, setShowTextbox] = useState(false);
+    const [showButton, setShowButton] = useState(true);
     const initialTexts = {
         'Básico': 'Quiero aprender sobre matemáticas básicas. ¿Cómo puedo comenzar?',
         'Medio': 'Quiero aprender sobre matemáticas de nivel medio. ¿Cómo puedo avanzar?',
@@ -40,26 +41,35 @@ function Contenido () {
 
         // Limpiar el cuadro de texto de la pregunta
         setQuestion('');
+
+        // Mostrar el cuadro de texto de la pregunta
+        setShowTextbox(true);
     };
 
     return (
-        <div>
+        <main className='main'>
+            <div className='divPrincipal'>
             <h1>Aprende sobre matemáticas</h1>
-
-            <button onClick={() => handleClick('Básico')}>Básico</button>
-            <button onClick={() => handleClick('Medio')}>Medio</button>
-            <button onClick={() => handleClick('Alto')}>Alto</button>
+            <button className="btnBsc" onClick={() => handleClick('Básico')}>Básico</button>
+            <button className="btnMd" onClick={() => handleClick('Medio')}>Medio</button>
+            <button className="btnAlt" onClick={() => handleClick('Alto')}>Alto</button>
             <br/>
             <div>
                 {chat.map((item, index) => (
-                    <div key={index}>
+                    <div key={index} className='respuesta'>
                         <p><strong>Tú:</strong> {item.question}</p>
                         <p><strong>Sistema:</strong> {item.answer}</p>
                     </div>
                 ))}
             </div>
-            <textarea value={question} onChange={e => setQuestion(e.target.value)} style={{width: '50%', height: 'auto', color: 'black'}} />
+            {/* Renderizar el cuadro de texto solo si showTextbox es verdadero */}
+            {showTextbox && (
+                <textarea value={question} onChange={e => setQuestion(e.target.value)} style={{width: '50%', height: 'auto', color: 'black'}} />
+            )}
+            {/*Renderizar el botón para enviar la información del Textbox (textarea) al servidor y obtener respuesta */}
+            
         </div>
+        </main>
     );
 }
 
